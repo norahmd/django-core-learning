@@ -9,5 +9,7 @@ def post_model_list_view(request):
     qs = PostModel.objects.all()
     print(qs)
     template = "blog/list-view.html"
-    context ={}
+    context ={
+        "object_list": qs
+    }
     return render(request, template, context)
