@@ -3,6 +3,6 @@
 
 {% for object in object_list %}
     <li>
-        {{ object.title }}
+        <a href='{% url "blog:detail" id=object.id %}'>{{ object.title }}</a>
     </li>
 {% endfor %}
