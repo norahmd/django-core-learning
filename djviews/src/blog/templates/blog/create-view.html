@@ -6,6 +6,10 @@
 </ul>
 {% endif %}
 
-<h1> {{ object.title }} </h1>
+<h1>create view</h1>
 
-{{ object.content }}
+<form method='POST' action='.'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type='submit' value='Create'>
+</form>

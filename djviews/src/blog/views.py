@@ -1,11 +1,35 @@
 from django.contrib.auth.decorators import login_required 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import PostModel
+from .forms import PostModelForm
+from django.contrib import messages
 # Create your views here.
 
 # CRUD
 
+def post_model_create_view(request):
+    # if request.method == "POST":
+    #     print(request.POST)
+    #     form = PostModelForm(request.POST)
+    #     if form.is_valid():
+    #         form.save(commit=False)
+    #         print(form.cleaned_data)
+    form = PostModelForm(request.POST or None)
+    context = {
+        "form": form
+    }
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        messages.success(request, "Created a new blog post!")
+        context = {
+        "form": PostModelForm()
+        }
+        # return HttpResponseRedirect("/blog/{num}".format(num=obj.id))
+   
+    template = "blog/create-view.html"
+    return render(request, template, context)
 
 def post_model_detail_view(request, id=None):
     print("norah hello there")
