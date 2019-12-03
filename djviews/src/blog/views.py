@@ -49,7 +49,6 @@ def post_model_update_view(request, id=None):
 
 
 def post_model_detail_view(request, id=None):
-    print("norah hello there")
     obj = get_object_or_404(PostModel, id=id)
     context ={
         "object": obj,
@@ -57,6 +56,19 @@ def post_model_detail_view(request, id=None):
     template = "blog/detail-view.html"
     return render(request, template, context)
 
+
+def post_model_delete_view(request, id=None):
+    obj = get_object_or_404(PostModel, id=id)
+    if request.method == 'POST':
+        obj.delete()
+        messages.success(request, "post deleted")
+        return HttpResponseRedirect("/blog/")
+
+    context ={
+        "object": obj,
+    }
+    template = "blog/delete-view.html"
+    return render(request, template, context)
 
 def post_model_list_view(request):
     qs = PostModel.objects.all()
