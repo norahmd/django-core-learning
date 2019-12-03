@@ -71,7 +71,10 @@ def post_model_delete_view(request, id=None):
     return render(request, template, context)
 
 def post_model_list_view(request):
+    query = request.GET.get("q", None)
     qs = PostModel.objects.all()
+    if query is not None:
+        qs = qs.filter(title__icontains=query)
     print("hi there")
     context ={
     "object_list": qs
